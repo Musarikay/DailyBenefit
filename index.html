@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#111">
+<title>Divine Benefit</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div class="brand"><div class="logo">DB</div><div><h1 id="title">DIVINE BENEFIT</h1><p id="subtitle">Daily Devotional Guide</p></div></div>
+  <button id="theme" aria-label="Toggle dark mode">☾</button>
+</header>
+<main>
+  <div class="toolbar">
+    <input id="search" type="search" placeholder="Search devotionals...">
+    <select id="dates" aria-label="Select date"></select>
+  </div>
+  <div id="results" class="results hidden"></div>
+  <article id="app">
+    <section class="hero"><small id="number"></small><div id="date"></div><h2 id="theme"></h2></section>
+    <section class="card"><h3>📖 Memory Verse</h3><b id="ref"></b><p id="verse" class="quote"></p></section>
+    <section class="card"><h3>✨ Divine Benefits</h3><ol id="benefits"></ol></section>
+    <section class="card"><h3>📌 Condition</h3><p id="condition"></p></section>
+    <section class="card"><h3>🙏 Prayer</h3><p id="prayer"></p></section>
+    <section class="card"><h3>🔥 Prophetic Words</h3><p id="prophetic"></p></section>
+    <section class="card"><h3>📚 Daily Bible Study</h3><p id="study"></p></section>
+    <nav><button id="prev">← Previous</button><button id="next">Next →</button></nav>
+  </article>
+  <div id="error" class="error hidden"></div>
+</main>
+<footer id="footer"></footer>
+<script src="app.js"></script>
+</body>
+</html>
