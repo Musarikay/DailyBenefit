@@ -6,10 +6,30 @@ async function load(){
   data=await r.json(); entries=data.entries||[]; if(!entries.length) throw Error("No entries");
   $("title").textContent=data.title||"DIVINE BENEFIT"; $("subtitle").textContent=data.subtitle||"Daily Devotional Guide";
   $("footer").textContent=(data.title||"Divine Benefit")+" • "+(data.period||"Daily Devotional Guide");
-  fillDates(); render();
+  fillDates();
+
+let today = getTodayDate();
+let todayIndex = entries.findIndex(e => e.date === today);
+
+if(todayIndex !== -1){
+ index = todayIndex;
+}else{
+ index = entries.length - 1; // Default to the last entry if today's date is not found
+}
+
+render();
+
+
  }catch(e){console.error(e);$("error").textContent="Could not load devotional data. Run this project through a local web server (see README).";$("error").classList.remove("hidden");$("app").classList.add("hidden")}
 }
 function dateText(s){let d=new Date(s+"T00:00:00");return isNaN(d)?s:new Intl.DateTimeFormat("en-NG",{weekday:"long",day:"2-digit",month:"long",year:"numeric"}).format(d)}
+function getTodayDate(){
+ let d=new Date();
+ let year=d.getFullYear();
+ let month=String(d.getMonth()+1).padStart(2,"0");
+ let day=String(d.getDate()).padStart(2,"0");
+ return `${year}-${month}-${day}`;
+}
 function fillDates(){let s=$("dates");s.innerHTML="";entries.forEach((e,i)=>{let o=document.createElement("option");o.value=i;o.textContent=dateText(e.date);s.appendChild(o)})}
 function render(){let e=entries[index],v=e.memory_verse||{};$("number").textContent="Daily Benefit "+(e.number??"");$("date").textContent=dateText(e.date);$("theme").textContent=e.theme||"";$("ref").textContent=v.reference||"";$("verse").textContent=v.text||"";$("benefits").innerHTML="";(e.divine_benefits||[]).forEach(x=>{let li=document.createElement("li");li.textContent=x;$("benefits").appendChild(li)});$("condition").textContent=e.condition||"";$("prayer").textContent=e.prayer||"";$("prophetic").textContent=e.prophetic_words||"";$("study").textContent=e.daily_bible_study||"";$("prev").disabled=index===0;$("next").disabled=index===entries.length-1;$("dates").value=index}
 function go(i){if(i>=0&&i<entries.length){index=i;render();scrollTo({top:0,behavior:"smooth"})}}
